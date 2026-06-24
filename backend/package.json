@@ -1,0 +1,23 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend of the repices-manager",
+  "keywords": [
+    "backend"
+  ],
+  "homepage": "https://github.com/Shaedow2000/Recipies-manager#readme",
+  "bugs": {
+    "url": "https://github.com/Shaedow2000/Recipies-manager/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shaedow2000/Recipies-manager.git"
+  },
+  "license": "MIT",
+  "author": "Shaedow2000",
+  "type": "module",
+  "main": "src/main.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
