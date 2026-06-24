@@ -14,10 +14,13 @@ app.use(express.json());
 async function start(): Promise<void> {
   try {
     app.listen(PORT, (): void => {
-      console.log("asdf");
+      console.log("[ INFO ]> Server listening on %d", PORT);
     });
   } catch (error: Error | unknown) {
-    console.log(error);
+    console.error(
+      "[ ERROR ]> An error occured: %s",
+      error instanceof Error ? error.message : error,
+    );
   }
 }
 
