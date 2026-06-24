@@ -1,0 +1,32 @@
+{
+  "name": "recipies-manager",
+  "version": "1.0.0",
+  "description": "recipie manager fullstack webapp",
+  "keywords": [
+    "repicie",
+    "manager",
+    "webapp",
+    "app",
+    "web",
+    "fullstack"
+  ],
+  "homepage": "https://github.com/Shaedow2000/Recipies-manager#readme",
+  "bugs": {
+    "url": "https://github.com/Shaedow2000/Recipies-manager/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shaedow2000/Recipies-manager.git"
+  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "license": "MIT",
+  "author": "Shaedow2000",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
