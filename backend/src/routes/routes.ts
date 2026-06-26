@@ -47,7 +47,16 @@ router.get(
   },
 );
 
-router.get("/recipes", () => {});
+router.get(
+  "/recipes",
+  async (_req: Request, res: Response): Promise<Response> => {
+    const recipes: any[] = await get.recipes();
+
+    return res.status(200).json({
+      recipes: recipes,
+    });
+  },
+);
 
 router.get("/recipes/:id", () => {});
 
