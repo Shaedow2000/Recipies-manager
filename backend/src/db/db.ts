@@ -43,7 +43,21 @@ class Get {
     );
 
     let recipe_ids: number[] = [];
+
     let recipes: {
+      id: number;
+      name: string;
+      category: string;
+      instructions: string;
+      prep_time: number;
+      cook_time: number;
+      ingredients: {
+        name: string;
+        amount: string;
+      }[];
+    }[] = [];
+
+    let recipesInfo: {
       id: number;
       name: string;
       category: string;
@@ -72,7 +86,7 @@ class Get {
         amount: string;
       }): void => {
         if (!recipe_ids.includes(recipe.id)) {
-          recipes.push({
+          recipesInfo.push({
             id: recipe.id,
             name: recipe.name,
             category: recipe.category,
@@ -114,10 +128,40 @@ class Get {
             amount: recipe.amount,
           });
         }
+
+        let recipeObj:
+          | {
+              id: number;
+              name: string;
+              category: string;
+              instructions: string;
+              prep_time: number;
+              cook_time: number;
+            }
+          | undefined = recipesInfo.find((r) => r.id === recipe.id);
+
+        let ingredientsObj:
+          | {
+              id: number;
+              ingredients: {
+                name: string;
+                amount: string;
+              }[];
+            }
+          | undefined = ingredients.find((i) => i.id === recipe.id);
+
+        if (!recipeObj || !ingredientsObj) {
+          return;
+        }
+
+        recipes.push({
+          ...recipeObj,
+          ingredients: ingredientsObj.ingredients,
+        });
       },
     );
 
-    return [recipes, ingredients];
+    return recipes;
   }
 }
 
