@@ -3,7 +3,8 @@ import "dotenv/config";
 import cors from "cors";
 
 import type { Express } from "express";
-import router from "./routes/routes";
+
+import router from "./routes/routes.ts";
 
 const PORT: number = parseInt(process.env.PORT || "8000", 10);
 
