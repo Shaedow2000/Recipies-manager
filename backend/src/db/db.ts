@@ -37,7 +37,7 @@ class Get {
     return categorieNames.rows.map((category: string[]): string => category[0]);
   }
 
-  public async recipes() {
+  public async recipes(id: number | undefined = undefined) {
     const recipesObj: QueryResult<any> = await pool.query(
       "SELECT r.id, r.name, c.name AS category, r.instructions, r.prep_time, r.cook_time, i.name AS ingredient_name, ri.amount FROM recipe_ingredients AS ri JOIN ingredients AS i ON i.id = ri.ingredient_id JOIN recipe AS r ON r.id = ri.recipe_id JOIN category AS c ON r.category_id = c.id;",
     );
@@ -161,7 +161,7 @@ class Get {
       },
     );
 
-    return recipes;
+    return id && id > 0 ? recipes.find((r) => r.id === id) : recipes;
   }
 }
 
