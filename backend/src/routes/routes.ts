@@ -83,7 +83,43 @@ router.get(
   },
 );
 
-router.get("/recipes/:id", () => {});
+router.get(
+  "/recipes/:id",
+  async (req: Request, res: Response): Promise<Response> => {
+    const recipe:
+      | {
+          id: number;
+          name: string;
+          category: string;
+          instructions: string;
+          prep_time: number;
+          cook_time: number;
+          ingredients: {
+            name: string;
+            amount: string;
+          }[];
+        }[]
+      | {
+          id: number;
+          name: string;
+          category: string;
+          instructions: string;
+          prep_time: number;
+          cook_time: number;
+          ingredients: {
+            name: string;
+            amount: string;
+          }[];
+        }
+      | undefined = await get.recipes(
+      parseInt(req.params.id.toString() || "-1"),
+    );
+
+    return res.status(200).json({
+      recipe: recipe,
+    });
+  },
+);
 
 router.post("/recipes", () => {});
 
