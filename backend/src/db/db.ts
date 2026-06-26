@@ -36,6 +36,68 @@ class Get {
 
     return categorieNames.rows.map((category: string[]): string => category[0]);
   }
+
+  public async recipes() {
+    const recipesObj: QueryResult<any> = await pool.query(
+      "SELECT r.id, r.name, c.name AS category, r.instructions, r.prep_time, r.cook_time, i.name AS ingredient_name, ri.amount FROM recipe_ingredients AS ri JOIN ingredients AS i ON i.id = ri.ingredient_id JOIN recipe AS r ON r.id = ri.recipe_id JOIN category AS c ON r.category_id = c.id;",
+    );
+
+    let recipe_ids: number[] = [];
+    let recipes: {
+      id: number;
+      name: string;
+      category: string;
+      instructions: string;
+      prep_time: number;
+      cook_time: number;
+    }[] = [];
+
+    let ingredients: {
+      id: number;
+      ingredients: {
+        name: string;
+        amount: string;
+      }[];
+    }[] = [];
+
+    recipesObj.rows.map(
+      (recipe: {
+        id: number;
+        name: string;
+        category: string;
+        instructions: string;
+        prep_time: number;
+        cook_time: number;
+        ingredient_name: string;
+        amount: string;
+      }): void => {
+        if (!recipe_ids.includes(recipe.id)) {
+          recipes.push({
+            id: recipe.id,
+            name: recipe.name,
+            category: recipe.category,
+            instructions: recipe.instructions,
+            prep_time: recipe.prep_time,
+            cook_time: recipe.cook_time,
+          });
+
+          ingredients.push({
+            id: recipe.id,
+            ingredients: [
+              {
+                name: recipe.ingredient_name,
+                amount: recipe.amount,
+              },
+            ],
+          });
+
+          recipe_ids.push(recipe.id);
+        }
+      },
+    );
+
+    return [recipes, ingredients];
+  }
 }
 
 export { Get };
