@@ -50,7 +50,32 @@ router.get(
 router.get(
   "/recipes",
   async (_req: Request, res: Response): Promise<Response> => {
-    const recipes: any[] = await get.recipes();
+    const recipes:
+      | {
+          id: number;
+          name: string;
+          category: string;
+          instructions: string;
+          prep_time: number;
+          cook_time: number;
+          ingredients: {
+            name: string;
+            amount: string;
+          }[];
+        }[]
+      | {
+          id: number;
+          name: string;
+          category: string;
+          instructions: string;
+          prep_time: number;
+          cook_time: number;
+          ingredients: {
+            name: string;
+            amount: string;
+          }[];
+        }
+      | undefined = await get.recipes();
 
     return res.status(200).json({
       recipes: recipes,
