@@ -2,7 +2,7 @@ import express from "express";
 import "dotenv/config";
 import cors from "cors";
 
-import type { Express } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 
 import router from "./routes/routes.ts";
 
@@ -12,7 +12,18 @@ const app: Express = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(router);
+
+app.use("/", (req: Request, res: Response, next: NextFunction): void => {
+  console.log("[ %s ]> %s", req.method, req.url);
+
+  res.on("finish", (): void => {
+    console.log("[ %s ]> %d -> %s", req.method, res.statusCode, req.url);
+  });
+
+  next();
+});
+
+app.use("/", router);
 
 async function start(): Promise<void> {
   try {
