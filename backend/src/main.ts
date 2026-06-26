@@ -3,6 +3,7 @@ import "dotenv/config";
 import cors from "cors";
 
 import type { Express } from "express";
+import router from "./routes/routes";
 
 const PORT: number = parseInt(process.env.PORT || "8000", 10);
 
@@ -10,6 +11,7 @@ const app: Express = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(router);
 
 async function start(): Promise<void> {
   try {
