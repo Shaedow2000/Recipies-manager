@@ -1,14 +1,21 @@
 import { Pool } from "pg";
 import { readFileSync } from "fs";
-import { join, dirname } from "path";
+import { resolve, join, dirname } from "path";
 import { fileURLToPath } from "url";
-import "dotenv/config";
+import dotenv from "dotenv";
+
+const __dirname: string = dirname(fileURLToPath(import.meta.url));
+
+dotenv.config({
+  path: resolve(__dirname, "../../../.env"),
+  override: true,
+  debug: true,
+  encoding: "utf-8",
+});
 
 const PGUSER: string = process.env.PGUSER || "";
 const PGPASSWROD: string = process.env.PGPASSWROD || "";
 const PGDB: string = process.env.PGDB || "";
-
-const __dirname: string = dirname(fileURLToPath(import.meta.url));
 
 const pool: Pool = new Pool({
   user: PGUSER,
@@ -22,7 +29,7 @@ export default async function initDB(): Promise<void> {
     await pool.query(dbInit);
     console.log("[ INFO ]> Init database");
   } catch (e: Error | unknown) {
-    console.log("[ ERROR ]> %s", e instanceof Error ? e.message : e);
+    console.error("[ ERROR ]> %s", e instanceof Error ? e.message : e);
   } finally {
     await pool.end();
   }
