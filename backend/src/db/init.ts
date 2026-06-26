@@ -10,7 +10,7 @@ const __dirname: string = dirname(fileURLToPath(import.meta.url));
 dotenv.config({
   path: resolve(__dirname, "../../../.env"),
   override: true,
-  debug: true,
+  quiet: true,
   encoding: "utf-8",
 });
 
