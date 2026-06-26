@@ -92,6 +92,34 @@ class Get {
           });
 
           recipe_ids.push(recipe.id);
+        } else {
+          let ingredientsObj:
+            | {
+                id: number;
+                ingredients: {
+                  name: string;
+                  amount: string;
+                }[];
+              }
+            | undefined;
+
+          ingredientsObj = ingredients.find((ingrd) => ingrd.id === recipe.id);
+
+          if (!ingredientsObj) {
+            return;
+          }
+
+          ingredientsObj?.ingredients.push({
+            name: recipe.ingredient_name,
+            amount: recipe.amount,
+          });
+
+          const ingredientIndex: number = ingredients.indexOf(
+            ingredientsObj || ({} as any),
+          );
+
+          ingredients.splice(ingredientIndex, 1);
+          ingredients.push(ingredientsObj);
         }
       },
     );
