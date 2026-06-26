@@ -3,7 +3,6 @@ import "dotenv/config";
 import cors from "cors";
 
 import type { Express } from "express";
-import initDB from "./db/init.ts";
 
 const PORT: number = parseInt(process.env.PORT || "8000", 10);
 
@@ -17,8 +16,6 @@ async function start(): Promise<void> {
     app.listen(PORT, (): void => {
       console.log("[ INFO ]> Server listening on %d", PORT);
     });
-
-    await initDB();
   } catch (error: Error | unknown) {
     console.error(
       "[ ERROR ]> An error occured: %s",
