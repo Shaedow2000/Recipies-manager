@@ -5,6 +5,7 @@ import cors from "cors";
 import type { Express, Request, Response, NextFunction } from "express";
 
 import router from "./routes/routes.ts";
+import errorHandler from "./middleware/error.handler.ts";
 
 const PORT: number = parseInt(process.env.PORT || "8000", 10);
 
@@ -12,7 +13,6 @@ const app: Express = express();
 
 app.use(cors());
 app.use(express.json());
-
 app.use("/", (req: Request, res: Response, next: NextFunction): void => {
   console.log("[ %s ]> %s", req.method, req.url);
 
@@ -22,8 +22,8 @@ app.use("/", (req: Request, res: Response, next: NextFunction): void => {
 
   next();
 });
-
 app.use("/", router);
+app.use(errorHandler);
 
 async function start(): Promise<void> {
   try {
