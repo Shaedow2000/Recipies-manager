@@ -200,10 +200,37 @@ class Post {
     cook_time: number,
     ingredients: { name: string; amount: string }[],
   ) {
-    await pool.query(
-      "INSERT INTO recipe(name, category_id, instructions, prep_time, cook_time) VALUES ($1, $2, $3, $4, $5)",
+    await pool.query("BEGIN;");
+
+    const recipe = await pool.query(
+      "INSERT INTO recipe(name, category_id, instructions, prep_time, cook_time) VALUES ($1, $2, $3, $4, $5) RETURNING id;",
       [name, category, instructions, prep_time, cook_time],
     );
+
+    let recipe_id: number = recipe.rows[0].id;
+
+    for (let i: number = 0; i < ingredients.length; i++) {
+      await pool.query(
+        "INSERT INTO ingredients (name) VALUES ($1) ON CONFLICT (name) DO NOTHING;",
+        [ingredients[i].name],
+      );
+    }
+
+    for (let i: number = 0; i < ingredients.length; i++) {
+      let ingredient = await pool.query(
+        "SELECT id FROM ingredients WHERE name = $1",
+        [ingredients[i].name],
+      );
+
+      let ingredient_id = ingredient.rows[0].id;
+
+      await pool.query(
+        "INSERT INTO recipe_ingredients(recipe_id, ingredient_id, amount) VALUES ($1, $2, $3)",
+        [recipe_id, ingredient_id, ingredients[i].amount],
+      );
+    }
+
+    await pool.query("COMMIT;");
 
     return { name: name, added: true };
   }
