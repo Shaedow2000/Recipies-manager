@@ -131,26 +131,23 @@ router.post(
       instructions,
       prep_time,
       cook_time,
+      ingredients,
     }: {
-      name: string | undefined;
-      category: number | undefined;
-      instructions: string | undefined;
-      prep_time: number | undefined;
-      cook_time: number | undefined;
+      name: string;
+      category: number;
+      instructions: string;
+      prep_time: number;
+      cook_time: number;
+      ingredients: { name: string; amount: string }[];
     } = req.body;
 
     await post.recipe(
-      name || "",
-      category || -1,
-      instructions || "",
-      prep_time || 0,
-      cook_time || 0,
-      [
-        {
-          name: "",
-          amount: "",
-        },
-      ],
+      name,
+      category,
+      instructions,
+      prep_time,
+      cook_time,
+      ingredients,
     );
 
     return res.status(200).json({});
