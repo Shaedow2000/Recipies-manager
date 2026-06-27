@@ -1,8 +1,11 @@
 import express from "express";
+import * as z from "zod";
 
 import type { Request, Response } from "express";
+
 import { Get, Post } from "../db/db.ts";
 import controllerWrapper from "../utils/contoller.error.handler.ts";
+import FieldError from "../types/FieldError.ts";
 
 const router: express.Router = express.Router();
 
@@ -129,6 +132,33 @@ router.get(
 router.post(
   "/recipes",
   controllerWrapper(async (req: Request, res: Response): Promise<Response> => {
+    const validationObj = z.object({
+      name: z.string("Name is required"),
+      category: z.number("Category is required to be a number"),
+      instructions: z.string("Instructions are required"),
+      prep_time: z.number("Preparation time is required to be a number"),
+      cook_time: z.number("Cooking time is required to be a number"),
+      ingredients: z.array(
+        z.object(
+          {
+            name: z.string("Name of ingredient is required"),
+            amount: z.string("Amount of ingredient is required"),
+          },
+          "Ingredient is required",
+        ),
+        "Ingredients are required",
+      ),
+    });
+
+    const result = validationObj.safeParse(req.body);
+
+    if (!result.success) {
+      throw new FieldError(
+        JSON.parse(result.error.message)[0].message,
+        JSON.parse(result.error.message)[0].path[0],
+      );
+    }
+
     const {
       name,
       category,
@@ -143,7 +173,7 @@ router.post(
       prep_time: number;
       cook_time: number;
       ingredients: { name: string; amount: string }[];
-    } = req.body;
+    } = result.data;
 
     const newRecipe: {
       id: number;
