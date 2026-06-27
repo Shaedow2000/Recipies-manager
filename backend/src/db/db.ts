@@ -191,4 +191,24 @@ class Get {
   }
 }
 
-export { Get };
+class Post {
+  public async recipe(
+    name: string,
+    category: number,
+    instructions: string,
+    prep_time: number,
+    cook_time: number,
+    ingredients: { name: string; amount: string }[],
+  ) {
+    const id: string = crypto.randomUUID();
+
+    await pool.query(
+      "INSERT INTO recipe(id, name, category_id, instructions, prep_time, cook_time) VALUES ($1, $2, $3, $4, $5, $6)",
+      [id, name, category, instructions, prep_time, cook_time],
+    );
+
+    return { id: id, name: name, added: true };
+  }
+}
+
+export { Get, Post };
