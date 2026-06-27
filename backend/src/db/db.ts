@@ -200,14 +200,12 @@ class Post {
     cook_time: number,
     ingredients: { name: string; amount: string }[],
   ) {
-    const id: string = crypto.randomUUID();
-
     await pool.query(
-      "INSERT INTO recipe(id, name, category_id, instructions, prep_time, cook_time) VALUES ($1, $2, $3, $4, $5, $6)",
-      [id, name, category, instructions, prep_time, cook_time],
+      "INSERT INTO recipe(name, category_id, instructions, prep_time, cook_time) VALUES ($1, $2, $3, $4, $5)",
+      [name, category, instructions, prep_time, cook_time],
     );
 
-    return { id: id, name: name, added: true };
+    return { name: name, added: true };
   }
 }
 
