@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS ingredients (
 );
 
 CREATE TABLE IF NOT EXISTS recipe (
-  id int UNIQUE,
+  id uuid UNIQUE,
   name varchar(80),
   category_id int,
   instructions text,
