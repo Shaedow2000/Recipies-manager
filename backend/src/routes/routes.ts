@@ -2,27 +2,31 @@ import express from "express";
 
 import type { Request, Response } from "express";
 import { Get, Post } from "../db/db.ts";
+import controllerWrapper from "../utils/contoller.error.handler.ts";
 
 const router: express.Router = express.Router();
 
 const get: Get = new Get();
 const post: Post = new Post();
 
-router.get("/", async (_req: Request, res: Response): Promise<Response> => {
-  return res.status(400).json({
-    message: "This is not a valid route. Please check the routes:",
-    routes: {
-      categories: "GET /categories",
-      recipes: "GET /recipes",
-      recipe_by_id: "GET /recipes/:id",
-      new_recipe: "POST /recipes",
-    },
-  });
-});
+router.get(
+  "/",
+  controllerWrapper(async (_req: Request, res: Response): Promise<Response> => {
+    return res.status(400).json({
+      message: "This is not a valid route. Please check the routes:",
+      routes: {
+        categories: "GET /categories",
+        recipes: "GET /recipes",
+        recipe_by_id: "GET /recipes/:id",
+        new_recipe: "POST /recipes",
+      },
+    });
+  }),
+);
 
 router.get(
   "/categories",
-  async (_req: Request, res: Response): Promise<Response> => {
+  controllerWrapper(async (_req: Request, res: Response): Promise<Response> => {
     const categories: string[] = await get.categories();
 
     return res.status(200).json({
@@ -45,12 +49,12 @@ router.get(
         },
       ],
     });
-  },
+  }),
 );
 
 router.get(
   "/recipes",
-  async (_req: Request, res: Response): Promise<Response> => {
+  controllerWrapper(async (_req: Request, res: Response): Promise<Response> => {
     const recipes:
       | {
           id: number;
@@ -81,12 +85,12 @@ router.get(
     return res.status(200).json({
       recipes: recipes,
     });
-  },
+  }),
 );
 
 router.get(
   "/recipes/:id",
-  async (req: Request, res: Response): Promise<Response> => {
+  controllerWrapper(async (req: Request, res: Response): Promise<Response> => {
     const recipe:
       | {
           id: number;
@@ -119,12 +123,12 @@ router.get(
     return res.status(200).json({
       recipe: recipe,
     });
-  },
+  }),
 );
 
 router.post(
   "/recipes",
-  async (req: Request, res: Response): Promise<Response> => {
+  controllerWrapper(async (req: Request, res: Response): Promise<Response> => {
     const {
       name,
       category,
@@ -156,7 +160,7 @@ router.post(
     return res.status(201).json({
       recipe: newRecipe,
     });
-  },
+  }),
 );
 
 export default router;
