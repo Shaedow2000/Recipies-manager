@@ -1,16 +1,16 @@
 CREATE TABLE IF NOT EXISTS category (
-  id int,
+  id int UNIQUE,
   name varchar(10)
 );
 
 CREATE TABLE IF NOT EXISTS ingredients (
-  id int,
+  id int UNIQUE,
   name varchar(80) UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS recipe (
-  id int,
-  name varchar(80) UNIQUE,
+  id int UNIQUE,
+  name varchar(80),
   category_id int,
   instructions text,
   prep_time int,
