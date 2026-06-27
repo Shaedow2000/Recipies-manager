@@ -1,4 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
+import FieldError from "../types/FieldError.ts";
 
 function errorHandler(
   error: unknown,
@@ -8,12 +9,22 @@ function errorHandler(
 ): Response {
   console.error(
     "[ ERROR ]> %s",
-    error instanceof Error ? error.message : error,
+    error instanceof FieldError || error instanceof Error
+      ? error.message
+      : error,
   );
 
   return res.status(500).json({
     status: "error",
-    message: error instanceof Error ? error.message : error,
+    error:
+      error instanceof FieldError
+        ? {
+            field: error.filed,
+            message: error.message,
+          }
+        : error instanceof Error
+          ? error.message
+          : error,
   });
 }
 
