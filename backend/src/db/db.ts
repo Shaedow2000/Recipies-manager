@@ -199,7 +199,10 @@ class Post {
     prep_time: number,
     cook_time: number,
     ingredients: { name: string; amount: string }[],
-  ) {
+  ): Promise<{
+    id: number;
+    name: string;
+  }> {
     await pool.query("BEGIN;");
 
     const recipe = await pool.query(
@@ -232,7 +235,7 @@ class Post {
 
     await pool.query("COMMIT;");
 
-    return { name: name, added: true };
+    return { id: recipe_id, name: name };
   }
 }
 

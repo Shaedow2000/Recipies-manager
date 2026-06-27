@@ -141,7 +141,10 @@ router.post(
       ingredients: { name: string; amount: string }[];
     } = req.body;
 
-    await post.recipe(
+    const newRecipe: {
+      id: number;
+      name: string;
+    } = await post.recipe(
       name,
       category,
       instructions,
@@ -150,7 +153,9 @@ router.post(
       ingredients,
     );
 
-    return res.status(200).json({});
+    return res.status(201).json({
+      recipe: newRecipe,
+    });
   },
 );
 
