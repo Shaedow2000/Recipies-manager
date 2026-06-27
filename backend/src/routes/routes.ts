@@ -1,11 +1,12 @@
 import express from "express";
 
 import type { Request, Response } from "express";
-import { Get } from "../db/db.ts";
+import { Get, Post } from "../db/db.ts";
 
 const router: express.Router = express.Router();
 
 const get: Get = new Get();
+const post: Post = new Post();
 
 router.get("/", async (_req: Request, res: Response): Promise<Response> => {
   return res.status(400).json({
@@ -121,6 +122,39 @@ router.get(
   },
 );
 
-router.post("/recipes", () => {});
+router.post(
+  "/recipes",
+  async (req: Request, res: Response): Promise<Response> => {
+    const {
+      name,
+      category,
+      instructions,
+      prep_time,
+      cook_time,
+    }: {
+      name: string | undefined;
+      category: number | undefined;
+      instructions: string | undefined;
+      prep_time: number | undefined;
+      cook_time: number | undefined;
+    } = req.body;
+
+    await post.recipe(
+      name || "",
+      category || -1,
+      instructions || "",
+      prep_time || 0,
+      cook_time || 0,
+      [
+        {
+          name: "",
+          amount: "",
+        },
+      ],
+    );
+
+    return res.status(200).json({});
+  },
+);
 
 export default router;
