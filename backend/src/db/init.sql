@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS category (
-  id int UNIQUE,
+  id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   name varchar(10)
 );
 
 CREATE TABLE IF NOT EXISTS ingredients (
-  id int UNIQUE,
+  id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   name varchar(80) UNIQUE
 );
 
