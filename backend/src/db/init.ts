@@ -34,12 +34,10 @@ async function initDB(): Promise<void> {
     ).rows[0].count;
 
     if (parseInt(String(categoriesNumber) || "0") < 4) {
-      await pool.query("INSERT INTO category(id, name) VALUES($1)", [
-        "Breakfast",
-      ]);
-      await pool.query("INSERT INTO category(id, name) VALUES($1)", ["Lunch"]);
-      await pool.query("INSERT INTO category(id, name) VALUES($1)", ["Dinner"]);
-      await pool.query("INSERT INTO category(id, name) VALUES($1)", ["Desert"]);
+      await pool.query("INSERT INTO category(name) VALUES($1)", ["Breakfast"]);
+      await pool.query("INSERT INTO category(name) VALUES($1)", ["Lunch"]);
+      await pool.query("INSERT INTO category(name) VALUES($1)", ["Dinner"]);
+      await pool.query("INSERT INTO category(name) VALUES($1)", ["Desert"]);
     }
 
     console.log("[ INFO ]> Init database");
