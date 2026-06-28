@@ -133,17 +133,26 @@ router.post(
   "/recipes",
   controllerWrapper(async (req: Request, res: Response): Promise<Response> => {
     const validationObj = z.object({
-      name: z.string("Name is required"),
+      name: z.string("Name is required").trim().min(1, "Name is required"),
       category: z.number("Category is required to be a number"),
-      instructions: z.string("Instructions are required"),
+      instructions: z
+        .string("Instructions are required")
+        .trim()
+        .min(1, "Instructions are required"),
       prep_time: z.number("Preparation time is required to be a number"),
       cook_time: z.number("Cooking time is required to be a number"),
       ingredients: z
         .array(
           z.object(
             {
-              name: z.string("Name of ingredient is required"),
-              amount: z.string("Amount of ingredient is required"),
+              name: z
+                .string("Name of ingredient is required")
+                .trim()
+                .min(1, "Ingredient name is required"),
+              amount: z
+                .string("Amount of ingredient is required")
+                .trim()
+                .min(1, "Ingredient amount is required"),
             },
             "Ingredient is required",
           ),
