@@ -138,16 +138,18 @@ router.post(
       instructions: z.string("Instructions are required"),
       prep_time: z.number("Preparation time is required to be a number"),
       cook_time: z.number("Cooking time is required to be a number"),
-      ingredients: z.array(
-        z.object(
-          {
-            name: z.string("Name of ingredient is required"),
-            amount: z.string("Amount of ingredient is required"),
-          },
-          "Ingredient is required",
-        ),
-        "Ingredients are required",
-      ),
+      ingredients: z
+        .array(
+          z.object(
+            {
+              name: z.string("Name of ingredient is required"),
+              amount: z.string("Amount of ingredient is required"),
+            },
+            "Ingredient is required",
+          ),
+          "Ingredients are required",
+        )
+        .min(1, "Recipe should contain at minimum one ingredient"),
     });
 
     const result = validationObj.safeParse(req.body);
