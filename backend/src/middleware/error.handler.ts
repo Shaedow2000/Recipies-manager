@@ -14,7 +14,7 @@ function errorHandler(
       : error,
   );
 
-  return res.status(500).json({
+  return res.status(error instanceof FieldError ? 400 : 500).json({
     status: "error",
     error:
       error instanceof FieldError
