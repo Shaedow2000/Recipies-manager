@@ -3,7 +3,6 @@ import RecipeCard from "../components/RecipeCard";
 
 function Home() {
   const data = useLoaderData();
-  console.log(data);
 
   return (
     <section>
@@ -13,7 +12,7 @@ function Home() {
       <div className="recipes">
         {!data.ok ? (
           <p>An error occured: {data.data}</p>
-        ) : data.data.recipes.length >= 0 ? (
+        ) : data.data.recipes.length <= 0 ? (
           <p>No recipes found</p>
         ) : (
           data.data.recipes.map(
