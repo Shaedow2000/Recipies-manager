@@ -1,6 +1,7 @@
 import ApiFetchError from "../types/ApiFetchError";
+import type { ApiResponse } from "../types/ApiResponseType";
 
-async function apiFetch(endpoint: string) {
+async function apiFetch(endpoint: string): Promise<ApiResponse> {
   try {
     const response = await fetch(`/api/${endpoint}`);
 
@@ -16,7 +17,7 @@ async function apiFetch(endpoint: string) {
     };
   } catch (error: unknown) {
     const errorObj: {
-      ok: boolean;
+      ok: false;
       error: {
         status: number | undefined;
         message: string | unknown;
