@@ -10,8 +10,11 @@ function RecipeCard({
   return (
     <section className="recipe-card">
       <h2>{title}</h2>
-      <p>{description}</p>
-      <span>{numberOfIngredients}</span>
+      <h4>{description}</h4>
+      <p>
+        Number of ingredients:
+        <span> {numberOfIngredients}</span>
+      </p>
     </section>
   );
 }
