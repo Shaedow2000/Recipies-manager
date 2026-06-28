@@ -4,6 +4,13 @@ import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 
 import type { QueryResult } from "pg";
+import type {
+  Ingredients,
+  Recipe,
+  RecipeInfo,
+  RecipeType,
+} from "../types/RecipeType.ts";
+import { number } from "zod";
 
 const __dirname: string = dirname(fileURLToPath(import.meta.url));
 
@@ -37,157 +44,56 @@ class Get {
     return categorieNames.rows.map((category: string[]): string => category[0]);
   }
 
-  public async recipes(id: number | undefined = undefined): Promise<
-    | {
-        id: number;
-        name: string;
-        category: string;
-        instructions: string;
-        prep_time: number;
-        cook_time: number;
-        ingredients: {
-          name: string;
-          amount: string;
-        }[];
-      }[]
-    | {
-        id: number;
-        name: string;
-        category: string;
-        instructions: string;
-        prep_time: number;
-        cook_time: number;
-        ingredients: {
-          name: string;
-          amount: string;
-        }[];
-      }
-    | undefined
-  > {
+  public async recipes(id: number | undefined = undefined): Promise<any> {
     const recipesObj: QueryResult<any> = await pool.query(
       "SELECT r.id, r.name, c.name AS category, r.instructions, r.prep_time, r.cook_time, i.name AS ingredient_name, ri.amount FROM recipe_ingredients AS ri JOIN ingredients AS i ON i.id = ri.ingredient_id JOIN recipe AS r ON r.id = ri.recipe_id JOIN category AS c ON r.category_id = c.id;",
     );
 
-    let recipe_ids: number[] = [];
+    let recipesInfo: RecipeInfo = [];
+    let recipesIngredients: Ingredients = [];
+    let recipesIds: number[] = [];
 
-    let recipes: {
-      id: number;
-      name: string;
-      category: string;
-      instructions: string;
-      prep_time: number;
-      cook_time: number;
-      ingredients: {
-        name: string;
-        amount: string;
-      }[];
-    }[] = [];
-
-    let recipesInfo: {
-      id: number;
-      name: string;
-      category: string;
-      instructions: string;
-      prep_time: number;
-      cook_time: number;
-    }[] = [];
-
-    let ingredients: {
-      id: number;
-      ingredients: {
-        name: string;
-        amount: string;
-      }[];
-    }[] = [];
-
-    recipesObj.rows.map(
-      (recipe: {
-        id: number;
-        name: string;
-        category: string;
-        instructions: string;
-        prep_time: number;
-        cook_time: number;
-        ingredient_name: string;
-        amount: string;
-      }): void => {
-        if (!recipe_ids.includes(recipe.id)) {
-          recipesInfo.push({
-            id: recipe.id,
-            name: recipe.name,
-            category: recipe.category,
-            instructions: recipe.instructions,
-            prep_time: recipe.prep_time,
-            cook_time: recipe.cook_time,
-          });
-
-          ingredients.push({
-            id: recipe.id,
-            ingredients: [
-              {
-                name: recipe.ingredient_name,
-                amount: recipe.amount,
-              },
-            ],
-          });
-
-          recipe_ids.push(recipe.id);
-        } else {
-          let ingredientsObj:
-            | {
-                id: number;
-                ingredients: {
-                  name: string;
-                  amount: string;
-                }[];
-              }
-            | undefined;
-
-          ingredientsObj = ingredients.find((ingrd) => ingrd.id === recipe.id);
-
-          if (!ingredientsObj) {
-            return;
-          }
-
-          ingredientsObj?.ingredients.push({
-            name: recipe.ingredient_name,
-            amount: recipe.amount,
-          });
-        }
-
-        let recipeObj:
-          | {
-              id: number;
-              name: string;
-              category: string;
-              instructions: string;
-              prep_time: number;
-              cook_time: number;
-            }
-          | undefined = recipesInfo.find((r) => r.id === recipe.id);
-
-        let ingredientsObj:
-          | {
-              id: number;
-              ingredients: {
-                name: string;
-                amount: string;
-              }[];
-            }
-          | undefined = ingredients.find((i) => i.id === recipe.id);
-
-        if (!recipeObj || !ingredientsObj) {
-          return;
-        }
-
-        recipes.push({
-          ...recipeObj,
-          ingredients: ingredientsObj.ingredients,
+    recipesObj.rows.forEach((recipe: Recipe): void => {
+      if (!recipesIds.includes(recipe.id)) {
+        recipesInfo.push({
+          id: recipe.id,
+          name: recipe.name,
+          category: recipe.category,
+          instructions: recipe.instructions,
+          prep_time: recipe.prep_time,
+          cook_time: recipe.cook_time,
         });
-      },
-    );
 
-    return id && id > 0 ? recipes.find((r) => r.id === id) : recipes;
+        recipesIngredients.push({
+          id: recipe.id,
+          ingredients: [
+            {
+              name: recipe.ingretients_name,
+              amount: recipe.amount,
+            },
+          ],
+        });
+
+        recipesIds.push(recipe.id);
+      } else {
+        let ingredient = recipesIngredients.find((r) => r.id === recipe.id);
+        ingredient?.ingredients.push({
+          name: recipe.ingretients_name,
+          amount: recipe.amount,
+        });
+      }
+    });
+
+    let recipes: RecipeType[] = [];
+
+    for (let i: number = 0; i < recipesIds.length; i++) {
+      recipes.push({
+        ...recipesInfo[i],
+        ingredients: recipesIngredients[0].ingredients,
+      });
+    }
+
+    return recipes;
   }
 }
 
