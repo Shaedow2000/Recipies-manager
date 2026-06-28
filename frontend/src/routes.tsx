@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router";
+import Home from "./pages/Home";
 import Root from "./layouts/Root";
 
 const router = createBrowserRouter([
@@ -7,8 +8,12 @@ const router = createBrowserRouter([
     Component: Root,
     children: [
       {
+        index: true,
+        Component: Home,
+      },
+      {
         path: "/recipe/:id",
-        Component: () => <></>,
+        Component: () => <p>RECIPE</p>,
       },
       {
         path: "/new",
