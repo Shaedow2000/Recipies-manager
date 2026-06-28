@@ -1,9 +1,10 @@
 import { createBrowserRouter } from "react-router";
+import Root from "./layouts/Root";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: () => <></>,
+    Component: Root,
     children: [
       {
         path: "/recipe/:id",
