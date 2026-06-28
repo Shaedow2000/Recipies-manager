@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import Home from "./pages/Home";
 import Root from "./layouts/Root";
 import getAllRecipes from "./loaders/getAllRecipes";
+import Details from "./pages/Details";
 
 const router = createBrowserRouter([
   {
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/recipe/:id",
-        Component: () => <p>RECIPE</p>,
+        Component: Details,
       },
       {
         path: "/new",
