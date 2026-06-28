@@ -41,6 +41,12 @@ span {
   min-height: 100vh;
   color: whitesmoke;
 }
+#main section {
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
 
 .recipes {
   width: 100%;
