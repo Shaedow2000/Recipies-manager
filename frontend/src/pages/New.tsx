@@ -62,7 +62,7 @@ function New() {
                           name: e.target.value,
                         };
 
-                        setIngredients(ingredients);
+                        setIngredients(newIngredients);
                       }}
                       placeholder="ingredient name"
                     />
