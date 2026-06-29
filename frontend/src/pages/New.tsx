@@ -1,43 +1,65 @@
-import { Form } from "react-router";
+import { Form, useLoaderData, useNavigate } from "react-router";
+import type { RecipeLoader } from "../types/LoaderType";
 
 function New() {
+  const data: RecipeLoader = useLoaderData();
+  const navigate = useNavigate();
+
   return (
     <section>
       <div>
-        <h1>New recipe</h1>
+        <h1>
+          {!data.ok
+            ? `An error occured: ${data.data.status} - ${data.data.message}`
+            : `New`}
+        </h1>
+        <a onClick={() => navigate("/")}>Home</a>
       </div>
       <div>
-        <Form method="post" action="/new">
-          <input type="text" name="name" placeholder="name" />
-          <select name="category">
-            <option value={"Select a category"} disabled>
-              Select a category
-            </option>
-          </select>
-          <div>
-            <input type="text" name="ing_name" placeholder="ingredient name" />
+        {data.ok ? (
+          <Form method="post" action="/new">
+            <input type="text" name="name" placeholder="name" />
+            <select name="category" required>
+              <option value={"Select a category"} disabled>
+                Select a category
+              </option>
+              {data.data.categories.map((category: any) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+            <div>
+              <input
+                type="text"
+                name="ing_name"
+                placeholder="ingredient name"
+              />
+              <input
+                type="text"
+                name="ing_amount"
+                placeholder="ingredient amount"
+              />
+            </div>
+            <textarea
+              name="instructions"
+              placeholder="recipe instructions"
+            ></textarea>
             <input
-              type="text"
-              name="ing_amount"
-              placeholder="ingredient amount"
+              type="number"
+              name="prep_time"
+              placeholder="preparation time in min"
             />
-          </div>
-          <textarea
-            name="instructions"
-            placeholder="recipe instructions"
-          ></textarea>
-          <input
-            type="number"
-            name="prep_time"
-            placeholder="preparation time in min"
-          />
-          <input
-            type="number"
-            name="cook_time"
-            placeholder="cooking time in min"
-          />
-          <button type="submit">Submit</button>
-        </Form>
+            <input
+              type="number"
+              name="cook_time"
+              placeholder="cooking time in min"
+            />
+            <button type="submit">Submit</button>
+          </Form>
+        ) : (
+          <></>
+        )}
       </div>
     </section>
   );
