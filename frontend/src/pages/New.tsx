@@ -9,21 +9,13 @@ function New() {
   const loading: boolean =
     navigation.state === "loading" || navigation.state === "submitting";
 
-  const [ingredientDivs, setIngredients] = useState(() => [
-    <div>
-      <input type="text" placeholder="ingredient name" />
-      <input type="text" placeholder="ingredient amount" />
-    </div>,
-  ]);
+  const [ingredientDivs, setIngredients] = useState([{ name: "", amount: "" }]);
 
-  function addIngredient() {
+  function removeIngredient(e: any): void {}
+
+  function addIngredient(): void {
     let newIngredientDivs = ingredientDivs;
-    newIngredientDivs.push(
-      <div>
-        <input type="text" placeholder="ingredient name" />
-        <input type="text" placeholder="ingredient amount" />
-      </div>,
-    );
+    newIngredientDivs.push({ name: "", amount: "" });
 
     setIngredients([...newIngredientDivs]);
   }
@@ -53,7 +45,27 @@ function New() {
               ))}
             </select>
             <section>
-              {ingredientDivs}
+              {ingredientDivs.map((ing) => (
+                <div id={`ing-${ingredientDivs.length}`}>
+                  <input
+                    type="text"
+                    onChange={(e) => {
+                      ing.name = e.target.value;
+                    }}
+                    placeholder="ingredient name"
+                  />
+                  <input
+                    type="text"
+                    onChange={(e) => {
+                      ing.amount = e.target.value;
+                    }}
+                    placeholder="ingredient amount"
+                  />
+                  <button type="button" onClick={removeIngredient}>
+                    x
+                  </button>
+                </div>
+              ))}
               <button type="button" onClick={addIngredient}>
                 Add ingredient
               </button>
