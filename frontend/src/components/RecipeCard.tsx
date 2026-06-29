@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router";
+
 function RecipeCard({
   id,
   title,
@@ -9,7 +11,11 @@ function RecipeCard({
   category: string;
   numberOfIngredients: number;
 }) {
-  function handleRedirect() {}
+  const navigate = useNavigate();
+
+  function handleRedirect() {
+    navigate(`/recipe/${id}`);
+  }
 
   return (
     <section
