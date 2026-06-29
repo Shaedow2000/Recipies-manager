@@ -4,6 +4,7 @@ import Root from "./layouts/Root";
 import getAllRecipes from "./loaders/getAllRecipes";
 import Details from "./pages/Details";
 import getRecipeById from "./loaders/getRecipeById";
+import New from "./pages/New";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/new",
-        Component: () => <></>,
+        Component: New,
       },
     ],
   },
