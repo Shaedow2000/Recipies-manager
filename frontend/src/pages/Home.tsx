@@ -12,7 +12,9 @@ function Home() {
       </div>
       <div className="recipes">
         {!data.ok ? (
-          <p>An error occured: {String(data.data)}</p>
+          <p>
+            An error occured: {data.data.status} - {data.data.message}
+          </p>
         ) : data.data.recipes.length <= 0 ? (
           <p>No recipes found</p>
         ) : (

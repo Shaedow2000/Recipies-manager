@@ -10,7 +10,7 @@ function Details() {
       <div className="top">
         <h1>
           {!data.ok
-            ? `An error occured: ${data.data.error.message}`
+            ? `An error occured: ${data.data.status} - ${data.data.message}`
             : `Recipe: ${data.data.recipes.name}`}
         </h1>
         <a onClick={() => navigate("/")}>Home</a>

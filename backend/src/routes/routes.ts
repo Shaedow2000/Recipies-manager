@@ -123,6 +123,10 @@ router.get(
       parseInt(req.params.id.toString() || "-1"),
     );
 
+    if (!recipe) {
+      throw new Error("Recipe not found");
+    }
+
     return res.status(200).json({
       recipes: recipe,
     });
