@@ -23,7 +23,7 @@ async function apiFetch(
     );
 
     if (!response.ok) {
-      throw new ApiFetchError(response.statusText, response.status);
+      throw new ApiFetchError((await response.json()).error, response.status);
     }
 
     const json = await response.json();
