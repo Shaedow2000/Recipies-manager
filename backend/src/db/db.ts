@@ -10,7 +10,7 @@ import type {
   RecipeInfo,
   RecipeType,
 } from "../types/RecipeType.ts";
-import { number } from "zod";
+import { number, parse } from "zod";
 
 const __dirname: string = dirname(fileURLToPath(import.meta.url));
 
@@ -93,7 +93,7 @@ class Get {
       });
     }
 
-    return recipes;
+    return id && id > 0 ? recipes.find((r) => r.id === id) : recipes;
   }
 }
 
