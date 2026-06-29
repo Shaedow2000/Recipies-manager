@@ -7,9 +7,9 @@ function New() {
         <h1>New recipe</h1>
       </div>
       <div>
-        <Form>
+        <Form method="post" action="/new">
           <input type="text" name="name" placeholder="name" />
-          <select>
+          <select name="category">
             <option value={"Select a category"} disabled>
               Select a category
             </option>
