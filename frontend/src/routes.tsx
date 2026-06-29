@@ -5,6 +5,7 @@ import getAllRecipes from "./loaders/getAllRecipes";
 import Details from "./pages/Details";
 import getRecipeById from "./loaders/getRecipeById";
 import New from "./pages/New";
+import newRecipe from "./actions/createRecipe";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/new",
+        action: newRecipe,
         Component: New,
       },
     ],
