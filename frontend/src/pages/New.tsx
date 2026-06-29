@@ -1,5 +1,6 @@
 import { Form, useLoaderData, useNavigate, useNavigation } from "react-router";
 import type { RecipeLoader } from "../types/LoaderType";
+import { useState } from "react";
 
 function New() {
   const data: RecipeLoader = useLoaderData();
@@ -7,6 +8,25 @@ function New() {
   const navigation = useNavigation();
   const loading: boolean =
     navigation.state === "loading" || navigation.state === "submitting";
+
+  const [ingredientDivs, setIngredients] = useState(() => [
+    <div>
+      <input type="text" placeholder="ingredient name" />
+      <input type="text" placeholder="ingredient amount" />
+    </div>,
+  ]);
+
+  function addIngredient() {
+    let newIngredientDivs = ingredientDivs;
+    newIngredientDivs.push(
+      <div>
+        <input type="text" placeholder="ingredient name" />
+        <input type="text" placeholder="ingredient amount" />
+      </div>,
+    );
+
+    setIngredients([...newIngredientDivs]);
+  }
 
   return (
     <section>
@@ -32,18 +52,12 @@ function New() {
                 </option>
               ))}
             </select>
-            <div>
-              <input
-                type="text"
-                name="ing_name"
-                placeholder="ingredient name"
-              />
-              <input
-                type="text"
-                name="ing_amount"
-                placeholder="ingredient amount"
-              />
-            </div>
+            <section>
+              {ingredientDivs}
+              <button type="button" onClick={addIngredient}>
+                Add ingredient
+              </button>
+            </section>
             <textarea
               name="instructions"
               placeholder="recipe instructions"
