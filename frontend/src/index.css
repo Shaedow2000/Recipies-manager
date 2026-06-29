@@ -11,6 +11,7 @@ body,
 
 * {
   transition: ease-in-out 0.2s;
+  word-break: break-all;
 }
 
 h1,
