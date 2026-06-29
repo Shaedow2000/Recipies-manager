@@ -1,9 +1,12 @@
-import { Form, useLoaderData, useNavigate } from "react-router";
+import { Form, useLoaderData, useNavigate, useNavigation } from "react-router";
 import type { RecipeLoader } from "../types/LoaderType";
 
 function New() {
   const data: RecipeLoader = useLoaderData();
   const navigate = useNavigate();
+  const navigation = useNavigation();
+  const loading: boolean =
+    navigation.state === "loading" || navigation.state === "submitting";
 
   return (
     <section>
@@ -55,7 +58,7 @@ function New() {
               name="cook_time"
               placeholder="cooking time in min"
             />
-            <button type="submit">Submit</button>
+            <button type="submit">{loading ? "SUBMITTING" : "Submit"}</button>
           </Form>
         ) : (
           <></>
