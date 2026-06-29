@@ -21,7 +21,7 @@ function Details() {
             Category: <span>{data.data.recipes.category}</span>
           </p>
           <p>
-            Preparation time: <span>{data.data.recipes.prep_time}</span>
+            Preparation time: <span>{data.data.recipes.prep_time}min</span>
           </p>
           <div className="ings">
             <p>Ingredients:</p>
@@ -43,7 +43,7 @@ function Details() {
             <span>{data.data.recipes.instructions}</span>
           </div>
           <p>
-            Cooking time: <span>{data.data.recipes.cook_time}</span>
+            Cooking time: <span>{data.data.recipes.cook_time}min</span>
           </p>
         </div>
       ) : (
