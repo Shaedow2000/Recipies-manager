@@ -17,7 +17,7 @@ async function apiFetch(
             headers: {
               "Content-Type": "application/json",
             },
-            body: body,
+            body: JSON.stringify(body),
           }
         : undefined,
     );
