@@ -7,7 +7,7 @@ function New() {
 
   return (
     <section>
-      <div>
+      <div className="top">
         <h1>
           {!data.ok
             ? `An error occured: ${data.data.status} - ${data.data.message}`

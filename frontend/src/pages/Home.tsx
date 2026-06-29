@@ -1,14 +1,16 @@
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import RecipeCard from "../components/RecipeCard";
 import type { RecipeLoader } from "../types/LoaderType";
 
 function Home() {
   const data: RecipeLoader = useLoaderData();
+  const navigate = useNavigate();
 
   return (
     <section>
-      <div>
+      <div className="top">
         <h1>Home - All recipes</h1>
+        <a onClick={() => navigate("/new")}>New</a>
       </div>
       <div className="recipes">
         {!data.ok ? (
