@@ -1,7 +1,8 @@
 import type { ApiResponse } from "../types/ApiResponseType";
 import { apiFetch } from "../utils/api";
 
-async function getRecipeById(id: number) {
+async function getRecipeById(params: any) {
+  const id: number = parseInt(params.id || "0", 10);
   const response: ApiResponse = await apiFetch(`recipes/${id}`);
 
   return {
