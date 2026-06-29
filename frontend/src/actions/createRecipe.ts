@@ -5,12 +5,15 @@ import type { ApiResponse } from "../types/ApiResponseType";
 async function newRecipe({ request }: ActionFunctionArgs) {
   const data = await request.formData();
 
-  const name: unknown = data.get("name");
+  const name: string | undefined = data.get("name")?.toString().trim();
   const category: number = parseInt(
     data.get("category")?.toString() || "0",
     10,
   );
-  const instructions: unknown = data.get("instructions");
+  const instructions: string | undefined = data
+    .get("instructions")
+    ?.toString()
+    .trim();
   const ingredients: { name: string; amount: string }[] = JSON.parse(
     data.get("ingredients")?.toString() || "[]",
   );
