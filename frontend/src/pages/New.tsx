@@ -47,7 +47,7 @@ function New() {
             <section>
               {ingredientDivs.map((ing, i) => {
                 return (
-                  <div id={`ing-${i + 1}`}>
+                  <div id={`${i}`}>
                     <input
                       type="text"
                       onChange={(e) => {
