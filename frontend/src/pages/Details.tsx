@@ -17,7 +17,7 @@ function Details() {
       <div className="recipe-info">
         <p>Category: {data.data.recipes.category}</p>
         <p>Preparation time: {data.data.recipes.prep_time}</p>
-        <div>
+        <div className="ings">
           <p>Ingredients:</p>
           {data.data.recipes.ingredients.map(
             (ing: { name: string; amount: string }) => (

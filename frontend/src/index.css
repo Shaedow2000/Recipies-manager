@@ -81,3 +81,20 @@ span {
   box-shadow: 0px 1px 2px black;
   transform: translateY(5%);
 }
+
+.recipe-info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.recipe-info .ings {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.recipe-info .ings .ing {
+  margin-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
