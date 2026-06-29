@@ -1,8 +1,9 @@
 import { useLoaderData } from "react-router";
 import RecipeCard from "../components/RecipeCard";
+import type { RecipeLoader } from "../types/LoaderType";
 
 function Home() {
-  const data = useLoaderData();
+  const data: RecipeLoader = useLoaderData();
 
   return (
     <section>
@@ -11,7 +12,7 @@ function Home() {
       </div>
       <div className="recipes">
         {!data.ok ? (
-          <p>An error occured: {data.data}</p>
+          <p>An error occured: {String(data.data)}</p>
         ) : data.data.recipes.length <= 0 ? (
           <p>No recipes found</p>
         ) : (
