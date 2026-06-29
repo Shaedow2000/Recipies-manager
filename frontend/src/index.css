@@ -98,3 +98,12 @@ span {
   flex-direction: column;
   gap: 4px;
 }
+.recipe-info p {
+  color: yellow;
+}
+.recipe-info span {
+  color: whitesmoke;
+}
+.recipe-info .instr span {
+  margin-left: 16px;
+}

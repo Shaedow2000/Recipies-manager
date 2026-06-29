@@ -15,24 +15,34 @@ function Details() {
         </h1>
       </div>
       <div className="recipe-info">
-        <p>Category: {data.data.recipes.category}</p>
-        <p>Preparation time: {data.data.recipes.prep_time}</p>
+        <p>
+          Category: <span>{data.data.recipes.category}</span>
+        </p>
+        <p>
+          Preparation time: <span>{data.data.recipes.prep_time}</span>
+        </p>
         <div className="ings">
           <p>Ingredients:</p>
           {data.data.recipes.ingredients.map(
             (ing: { name: string; amount: string }) => (
               <div className="ing">
-                <p>name: {ing.name}</p>
-                <span>amount: {ing.amount}</span>
+                <p>
+                  name: <span>{ing.name}</span>
+                </p>
+                <p>
+                  amount: <span>{ing.amount}</span>
+                </p>
               </div>
             ),
           )}
         </div>
-        <div>
+        <div className="instr">
           <p>Instructions: </p>
-          <p>{data.data.recipes.instructions}</p>
+          <span>{data.data.recipes.instructions}</span>
         </div>
-        <p>Cooking time: {data.data.recipes.cook_time}</p>
+        <p>
+          Cooking time: <span>{data.data.recipes.cook_time}</span>
+        </p>
       </div>
     </section>
   );
