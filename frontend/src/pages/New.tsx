@@ -45,20 +45,22 @@ function New() {
               ))}
             </select>
             <section>
-              {ingredientDivs.map((ing, i) => {
+              {ingredientDivs.map((_j, i) => {
                 return (
                   <div id={`${i}`}>
                     <input
                       type="text"
                       onChange={(e) => {
-                        ing.name = e.target.value;
+                        ingredientDivs[i].name = e.target.value;
+                        setIngredients(ingredientDivs);
                       }}
                       placeholder="ingredient name"
                     />
                     <input
                       type="text"
                       onChange={(e) => {
-                        ing.amount = e.target.value;
+                        ingredientDivs[i].amount = e.target.value;
+                        setIngredients(ingredientDivs);
                       }}
                       placeholder="ingredient amount"
                     />
