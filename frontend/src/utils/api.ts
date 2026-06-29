@@ -1,9 +1,26 @@
 import ApiFetchError from "../types/ApiFetchError";
 import type { ApiResponse } from "../types/ApiResponseType";
 
-async function apiFetch(endpoint: string): Promise<ApiResponse> {
+type Methods = "GET" | "POST";
+
+async function apiFetch(
+  endpoint: string,
+  method: Methods = "GET",
+  body: any = null,
+): Promise<ApiResponse> {
   try {
-    const response = await fetch(`/api/${endpoint}`);
+    const response = await fetch(
+      `/api/${endpoint}`,
+      method === "POST"
+        ? {
+            method: method,
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: body,
+          }
+        : undefined,
+    );
 
     if (!response.ok) {
       throw new ApiFetchError(response.statusText, response.status);
