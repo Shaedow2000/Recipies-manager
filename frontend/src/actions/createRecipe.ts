@@ -6,19 +6,20 @@ async function newRecipe({ request }: ActionFunctionArgs) {
   const data = await request.formData();
 
   const name: unknown = data.get("name");
-  const category: unknown = data.get("category");
+  // const category: unknown = data.get("category");
+  const category: unknown = 2;
   const instructions: unknown = data.get("instructions");
   const ingName: unknown = data.get("ing_name");
   const ingAmount: unknown = data.get("ing_amount");
-  const prepTime: unknown = data.get("prep_time");
-  const cookTime: unknown = data.get("cook_time");
+  const prepTime: string | undefined = data.get("prep_time")?.toString();
+  const cookTime: string | undefined = data.get("cook_time")?.toString();
 
   const body = {
     name,
     category,
     instructions,
-    prep_time: prepTime,
-    cook_time: cookTime,
+    prep_time: parseInt(prepTime || "0", 10),
+    cook_time: parseInt(cookTime || "0", 10),
     ingredients: [
       {
         name: ingName,

@@ -15,8 +15,12 @@ function New() {
             </option>
           </select>
           <div>
-            <input type="text" placeholder="ingredient name" />
-            <input type="text" placeholder="ingredient amount" />
+            <input type="text" name="ing_name" placeholder="ingredient name" />
+            <input
+              type="text"
+              name="ing_amount"
+              placeholder="ingredient amount"
+            />
           </div>
           <textarea
             name="instructions"
