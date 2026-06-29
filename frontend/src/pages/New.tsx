@@ -11,7 +11,11 @@ function New() {
 
   const [ingredientDivs, setIngredients] = useState([{ name: "", amount: "" }]);
 
-  function removeIngredient(e: any): void {}
+  function removeIngredient(e: any): void {
+    let newIngredients = [...ingredientDivs];
+    newIngredients.splice(parseInt(e.target.parentElement.id, 10), 1);
+    setIngredients(newIngredients);
+  }
 
   function addIngredient(): void {
     let newIngredientDivs = ingredientDivs;
