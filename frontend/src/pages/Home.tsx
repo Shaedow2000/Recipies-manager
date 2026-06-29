@@ -17,13 +17,16 @@ function Home() {
         ) : (
           data.data.recipes.map(
             (recipe: {
+              id: number;
               name: string;
-              instructions: string;
+              category: string;
               ingredients: any[];
             }) => (
               <RecipeCard
+                id={recipe.id}
+                key={recipe.id}
                 title={recipe.name}
-                description={recipe.instructions}
+                category={recipe.category}
                 numberOfIngredients={recipe.ingredients.length}
               />
             ),

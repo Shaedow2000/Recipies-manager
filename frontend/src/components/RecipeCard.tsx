@@ -1,16 +1,24 @@
 function RecipeCard({
+  id,
   title,
-  description,
+  category,
   numberOfIngredients,
 }: {
+  id: number;
   title: string;
-  description: string;
+  category: string;
   numberOfIngredients: number;
 }) {
+  function handleRedirect() {}
+
   return (
-    <section className="recipe-card">
+    <section
+      id={`recipe-${id}`}
+      onClick={handleRedirect}
+      className="recipe-card"
+    >
       <h2>{title}</h2>
-      <h4>{description}</h4>
+      <h4>Category: {category}</h4>
       <p>
         Number of ingredients:
         <span> {numberOfIngredients}</span>
