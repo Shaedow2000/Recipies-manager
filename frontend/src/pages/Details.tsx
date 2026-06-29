@@ -1,18 +1,19 @@
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import type { RecipeLoader } from "../types/LoaderType";
 
 function Details() {
   const data: RecipeLoader = useLoaderData();
-  console.log(data);
+  const navigate = useNavigate();
 
   return (
     <section>
-      <div>
+      <div className="top">
         <h1>
           {!data.ok
             ? `An error occured: ${data.data.error.message}`
             : `Recipe: ${data.data.recipes.name}`}
         </h1>
+        <a onClick={() => navigate("/")}>Home</a>
       </div>
       <div className="recipe-info">
         <p>
