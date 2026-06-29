@@ -88,7 +88,7 @@ class Get {
     for (let i: number = 0; i < recipesIds.length; i++) {
       recipes.push({
         ...recipesInfo[i],
-        ingredients: recipesIngredients[0].ingredients,
+        ingredients: recipesIngredients[i].ingredients,
       });
     }
 
