@@ -28,9 +28,14 @@ async function newRecipe({ request }: ActionFunctionArgs) {
 
   const response: ApiResponse = await apiFetch("recipes", "POST", body);
 
-  return {
-    ok: response.ok,
-  };
+  return response.ok
+    ? {
+        ok: response.ok,
+      }
+    : {
+        ok: response.ok,
+        error: response.error,
+      };
 }
 
 export default newRecipe;

@@ -126,9 +126,21 @@ function New() {
             {!response ? (
               <></>
             ) : response.ok ? (
-              <p>RECIPE CREATED</p>
+              <p
+                style={{
+                  color: "lightgreen",
+                }}
+              >
+                RECIPE CREATED
+              </p>
             ) : (
-              <p>ERROR</p>
+              <p
+                style={{
+                  color: "lightsalmon",
+                }}
+              >
+                {response.error.message.message}
+              </p>
             )}
           </>
         ) : (
