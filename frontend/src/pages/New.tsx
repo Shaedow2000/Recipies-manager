@@ -45,27 +45,29 @@ function New() {
               ))}
             </select>
             <section>
-              {ingredientDivs.map((ing) => (
-                <div id={`ing-${ingredientDivs.length}`}>
-                  <input
-                    type="text"
-                    onChange={(e) => {
-                      ing.name = e.target.value;
-                    }}
-                    placeholder="ingredient name"
-                  />
-                  <input
-                    type="text"
-                    onChange={(e) => {
-                      ing.amount = e.target.value;
-                    }}
-                    placeholder="ingredient amount"
-                  />
-                  <button type="button" onClick={removeIngredient}>
-                    x
-                  </button>
-                </div>
-              ))}
+              {ingredientDivs.map((ing, i) => {
+                return (
+                  <div id={`ing-${i + 1}`}>
+                    <input
+                      type="text"
+                      onChange={(e) => {
+                        ing.name = e.target.value;
+                      }}
+                      placeholder="ingredient name"
+                    />
+                    <input
+                      type="text"
+                      onChange={(e) => {
+                        ing.amount = e.target.value;
+                      }}
+                      placeholder="ingredient amount"
+                    />
+                    <button type="button" onClick={removeIngredient}>
+                      x
+                    </button>
+                  </div>
+                );
+              })}
               <button type="button" onClick={addIngredient}>
                 Add ingredient
               </button>
