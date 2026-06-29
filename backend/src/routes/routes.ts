@@ -6,6 +6,7 @@ import type { Request, Response } from "express";
 import { Get, Post } from "../db/db.ts";
 import controllerWrapper from "../utils/contoller.error.handler.ts";
 import FieldError from "../types/FieldError.ts";
+import NotFoundError from "../types/NotFoundError.ts";
 
 const router: express.Router = express.Router();
 
@@ -124,7 +125,7 @@ router.get(
     );
 
     if (!recipe) {
-      throw new Error("Recipe not found");
+      throw new NotFoundError("Recipe not found");
     }
 
     return res.status(200).json({
