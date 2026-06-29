@@ -14,6 +14,7 @@ function New() {
   function removeIngredient(e: any): void {
     let newIngredients = [...ingredients];
     newIngredients.splice(parseInt(e.target.parentElement.id, 10), 1);
+
     setIngredients(newIngredients);
   }
 
@@ -87,6 +88,12 @@ function New() {
               <button type="button" onClick={addIngredient}>
                 Add ingredient
               </button>
+
+              <input
+                type="hidden"
+                name="ingredients"
+                value={JSON.stringify(ingredients)}
+              />
             </section>
             <textarea
               name="instructions"
