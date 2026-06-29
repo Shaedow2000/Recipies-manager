@@ -11,9 +11,11 @@ function New() {
 
   const [ingredients, setIngredients] = useState([{ name: "", amount: "" }]);
 
-  function removeIngredient(e: any): void {
+  function removeIngredient(i: number): void {
     let newIngredients = [...ingredients];
-    newIngredients.splice(parseInt(e.target.parentElement.id, 10), 1);
+    console.log(i);
+    newIngredients.splice(i, 1);
+    console.log(newIngredients);
 
     setIngredients(newIngredients);
   }
@@ -55,6 +57,7 @@ function New() {
                   <div id={`${i}`}>
                     <input
                       type="text"
+                      value={ingredients[i].name}
                       onChange={(e) => {
                         let newIngredients = [...ingredients];
                         newIngredients[i] = {
@@ -68,6 +71,7 @@ function New() {
                     />
                     <input
                       type="text"
+                      value={ingredients[i].amount}
                       onChange={(e) => {
                         let newIngredients = [...ingredients];
                         newIngredients[i] = {
@@ -79,7 +83,7 @@ function New() {
                       }}
                       placeholder="ingredient amount"
                     />
-                    <button type="button" onClick={removeIngredient}>
+                    <button type="button" onClick={() => removeIngredient(i)}>
                       x
                     </button>
                   </div>
