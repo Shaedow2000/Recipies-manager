@@ -15,36 +15,40 @@ function Details() {
         </h1>
         <a onClick={() => navigate("/")}>Home</a>
       </div>
-      <div className="recipe-info">
-        <p>
-          Category: <span>{data.data.recipes.category}</span>
-        </p>
-        <p>
-          Preparation time: <span>{data.data.recipes.prep_time}</span>
-        </p>
-        <div className="ings">
-          <p>Ingredients:</p>
-          {data.data.recipes.ingredients.map(
-            (ing: { name: string; amount: string }) => (
-              <div className="ing">
-                <p>
-                  name: <span>{ing.name}</span>
-                </p>
-                <p>
-                  amount: <span>{ing.amount}</span>
-                </p>
-              </div>
-            ),
-          )}
+      {data.ok ? (
+        <div className="recipe-info">
+          <p>
+            Category: <span>{data.data.recipes.category}</span>
+          </p>
+          <p>
+            Preparation time: <span>{data.data.recipes.prep_time}</span>
+          </p>
+          <div className="ings">
+            <p>Ingredients:</p>
+            {data.data.recipes.ingredients.map(
+              (ing: { name: string; amount: string }) => (
+                <div className="ing">
+                  <p>
+                    name: <span>{ing.name}</span>
+                  </p>
+                  <p>
+                    amount: <span>{ing.amount}</span>
+                  </p>
+                </div>
+              ),
+            )}
+          </div>
+          <div className="instr">
+            <p>Instructions: </p>
+            <span>{data.data.recipes.instructions}</span>
+          </div>
+          <p>
+            Cooking time: <span>{data.data.recipes.cook_time}</span>
+          </p>
         </div>
-        <div className="instr">
-          <p>Instructions: </p>
-          <span>{data.data.recipes.instructions}</span>
-        </div>
-        <p>
-          Cooking time: <span>{data.data.recipes.cook_time}</span>
-        </p>
-      </div>
+      ) : (
+        <p>Recipe not found</p>
+      )}
     </section>
   );
 }
