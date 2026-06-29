@@ -67,7 +67,7 @@ class Get {
           id: recipe.id,
           ingredients: [
             {
-              name: recipe.ingretients_name,
+              name: recipe.ingredient_name,
               amount: recipe.amount,
             },
           ],
@@ -77,7 +77,7 @@ class Get {
       } else {
         let ingredient = recipesIngredients.find((r) => r.id === recipe.id);
         ingredient?.ingredients.push({
-          name: recipe.ingretients_name,
+          name: recipe.ingredient_name,
           amount: recipe.amount,
         });
       }

@@ -18,7 +18,7 @@ export type Recipe = {
   instructions: string;
   prep_time: number;
   cook_time: number;
-  ingretients_name: string;
+  ingredient_name: string;
   amount: string;
 };
 
