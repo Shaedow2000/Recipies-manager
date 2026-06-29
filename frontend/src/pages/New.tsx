@@ -18,10 +18,10 @@ function New() {
   }
 
   function addIngredient(): void {
-    let newIngredientDivs = ingredients;
+    let newIngredientDivs = [...ingredients];
     newIngredientDivs.push({ name: "", amount: "" });
 
-    setIngredients([...newIngredientDivs]);
+    setIngredients(newIngredientDivs);
   }
 
   return (
@@ -55,7 +55,12 @@ function New() {
                     <input
                       type="text"
                       onChange={(e) => {
-                        ingredients[i].name = e.target.value;
+                        let newIngredients = [...ingredients];
+                        newIngredients[i] = {
+                          ...newIngredients[i],
+                          name: e.target.value,
+                        };
+
                         setIngredients(ingredients);
                       }}
                       placeholder="ingredient name"
@@ -63,8 +68,13 @@ function New() {
                     <input
                       type="text"
                       onChange={(e) => {
-                        ingredients[i].amount = e.target.value;
-                        setIngredients(ingredients);
+                        let newIngredients = [...ingredients];
+                        newIngredients[i] = {
+                          ...newIngredients[i],
+                          amount: e.target.value,
+                        };
+
+                        setIngredients(newIngredients);
                       }}
                       placeholder="ingredient amount"
                     />
