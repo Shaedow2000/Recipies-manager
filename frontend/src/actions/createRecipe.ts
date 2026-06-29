@@ -6,8 +6,10 @@ async function newRecipe({ request }: ActionFunctionArgs) {
   const data = await request.formData();
 
   const name: unknown = data.get("name");
-  // const category: unknown = data.get("category");
-  const category: unknown = 2;
+  const category: number = parseInt(
+    data.get("category")?.toString() || "0",
+    10,
+  );
   const instructions: unknown = data.get("instructions");
   const ingName: unknown = data.get("ing_name");
   const ingAmount: unknown = data.get("ing_amount");
