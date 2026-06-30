@@ -43,10 +43,22 @@ class Get {
     return categorieNames.rows.map((category: string[]): string => category[0]);
   }
 
-  public async recipes(id: number | undefined = undefined): Promise<any> {
-    const recipesObj: QueryResult<any> = await pool.query(
-      "SELECT r.id, r.name, c.name AS category, r.instructions, r.prep_time, r.cook_time, i.name AS ingredient_name, ri.amount FROM recipe_ingredients AS ri JOIN ingredients AS i ON i.id = ri.ingredient_id JOIN recipe AS r ON r.id = ri.recipe_id JOIN category AS c ON r.category_id = c.id;",
-    );
+  public async recipes(
+    id: number | undefined = undefined,
+    title: string | undefined = undefined,
+  ): Promise<any> {
+    let recipesObj: QueryResult<any>;
+
+    if (!title) {
+      recipesObj = await pool.query(
+        "SELECT r.id, r.name, c.name AS category, r.instructions, r.prep_time, r.cook_time, i.name AS ingredient_name, ri.amount FROM recipe_ingredients AS ri JOIN ingredients AS i ON i.id = ri.ingredient_id JOIN recipe AS r ON r.id = ri.recipe_id JOIN category AS c ON r.category_id = c.id;",
+      );
+    } else {
+      recipesObj = await pool.query(
+        "SELECT r.id, r.name, c.name AS category, r.instructions, r.prep_time, r.cook_time, i.name AS ingredient_name, ri.amount FROM recipe_ingredients AS ri JOIN ingredients AS i ON i.id = ri.ingredient_id JOIN recipe AS r ON r.id = ri.recipe_id JOIN category AS c ON r.category_id = c.id WHERE r.name ILIKE '%$1%';",
+        [title],
+      );
+    }
 
     let recipesInfo: RecipeInfo = [];
     let recipesIngredients: Ingredients = [];
