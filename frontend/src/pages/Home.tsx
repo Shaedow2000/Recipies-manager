@@ -36,7 +36,15 @@ function Home() {
         <section>
           <div className="top">
             <h1>Home - All recipes</h1>
-            <a onClick={() => navigate("/new")}>New</a>
+            <div
+              style={{
+                display: "flex",
+                gap: "16px",
+              }}
+            >
+              <a onClick={() => navigate("/search")}>Search</a>
+              <a onClick={() => navigate("/new")}>New</a>
+            </div>
           </div>
           <div className="recipes">
             {!data.ok ? (
