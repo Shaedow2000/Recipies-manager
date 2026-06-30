@@ -134,6 +134,46 @@ router.get(
   }),
 );
 
+router.get(
+  "/recipes/t/:title",
+  controllerWrapper(async (req: Request, res: Response): Promise<Response> => {
+    const recipes:
+      | {
+          id: number;
+          name: string;
+          category: string;
+          instructions: string;
+          prep_time: number;
+          cook_time: number;
+          ingredients: {
+            name: string;
+            amount: string;
+          }[];
+        }[]
+      | {
+          id: number;
+          name: string;
+          category: string;
+          instructions: string;
+          prep_time: number;
+          cook_time: number;
+          ingredients: {
+            name: string;
+            amount: string;
+          }[];
+        }
+      | undefined = await get.recipes(-1, req.params.title.toString());
+
+    if (!recipes) {
+      throw new NotFoundError("Recipe not found");
+    }
+
+    return res.status(200).json({
+      recipes: recipes,
+    });
+  }),
+);
+
 router.post(
   "/recipes",
   controllerWrapper(async (req: Request, res: Response): Promise<Response> => {

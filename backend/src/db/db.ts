@@ -44,8 +44,8 @@ class Get {
   }
 
   public async recipes(
-    id: number | undefined = undefined,
-    title: string | undefined = undefined,
+    id: number | undefined,
+    title?: string | undefined,
   ): Promise<any> {
     let recipesObj: QueryResult<any>;
 
@@ -104,7 +104,7 @@ class Get {
       });
     }
 
-    return id && id > 0 ? recipes.find((r) => r.id === id) : recipes;
+    return id && id > 0 && !title ? recipes.find((r) => r.id === id) : recipes;
   }
 }
 
