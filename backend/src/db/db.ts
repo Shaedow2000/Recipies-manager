@@ -44,7 +44,7 @@ class Get {
   }
 
   public async recipes(
-    id: number | undefined,
+    id: number | undefined = undefined,
     title?: string | undefined,
   ): Promise<any> {
     let recipesObj: QueryResult<any>;
