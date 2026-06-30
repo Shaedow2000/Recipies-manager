@@ -5,7 +5,11 @@ import type { ApiResponse } from "../types/ApiResponseType";
 async function newRecipe({ request }: ActionFunctionArgs) {
   const data = await request.formData();
 
-  const name: string | undefined = data.get("name")?.toString().trim();
+  const name: string | undefined = data
+    .get("name")
+    ?.toString()
+    .trim()
+    .toLowerCase();
   const category: number = parseInt(
     data.get("category")?.toString() || "0",
     10,
