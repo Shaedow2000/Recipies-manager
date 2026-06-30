@@ -48,6 +48,7 @@ class Get {
     title?: string | undefined,
   ): Promise<any> {
     let recipesObj: QueryResult<any>;
+    console.log(title);
 
     if (!title) {
       recipesObj = await pool.query(
@@ -55,7 +56,7 @@ class Get {
       );
     } else {
       recipesObj = await pool.query(
-        "SELECT r.id, r.name, c.name AS category, r.instructions, r.prep_time, r.cook_time, i.name AS ingredient_name, ri.amount FROM recipe_ingredients AS ri JOIN ingredients AS i ON i.id = ri.ingredient_id JOIN recipe AS r ON r.id = ri.recipe_id JOIN category AS c ON r.category_id = c.id WHERE r.name ILIKE '%$1%';",
+        "SELECT r.id, r.name, c.name AS category, r.instructions, r.prep_time, r.cook_time, i.name AS ingredient_name, ri.amount FROM recipe_ingredients AS ri JOIN ingredients AS i ON i.id = ri.ingredient_id JOIN recipe AS r ON r.id = ri.recipe_id JOIN category AS c ON r.category_id = c.id WHERE r.name ILIKE '%' || $1 || '%';",
         [title],
       );
     }
