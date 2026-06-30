@@ -1,7 +1,11 @@
+import { useRef } from "react";
 import { useNavigate } from "react-router";
 
 function Search() {
   const navigate = useNavigate();
+  const foundRecipesDivRef = useRef(null);
+
+  function handleSearch(e: any) {}
 
   return (
     <section>
@@ -10,11 +14,8 @@ function Search() {
         <a onClick={() => navigate("/")}>Home</a>
       </div>
       <div>
-        <input
-          onChange={(e) => console.log(e.target.value)}
-          placeholder="search"
-        />
-        <div className="found-recipes"></div>
+        <input onChange={handleSearch} placeholder="search" />
+        <div className="found-recipes" ref={foundRecipesDivRef}></div>
       </div>
     </section>
   );
