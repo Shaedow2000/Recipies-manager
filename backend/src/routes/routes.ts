@@ -162,7 +162,7 @@ router.get(
             amount: string;
           }[];
         }
-      | undefined = await get.recipes(-1, req.params.title.toString());
+      | undefined = await get.recipes(undefined, req.params.title.toString());
 
     if (!recipes) {
       throw new NotFoundError("Recipe not found");
